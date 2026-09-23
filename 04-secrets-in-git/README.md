@@ -1,7 +1,8 @@
 # Deleted the key? It is still in Git
 
 Video: https://youtu.be/Et33NM8Gf4w
-Short: not uploaded yet
+Short (extended): https://youtube.com/shorts/nKFmUn_fAZE
+Short (hook): uploaded, link pending
 
 Needs Python 3.10 or newer, git, and
 [gitleaks](https://github.com/gitleaks/gitleaks) on your PATH.
