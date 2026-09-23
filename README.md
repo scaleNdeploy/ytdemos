@@ -7,3 +7,4 @@ One folder per video. All names and data are fictional. MIT license.
 |---|---|
 | [01-retry-backoff-jitter](01-retry-backoff-jitter) | [Retry storms: backoff and jitter](https://youtu.be/iQDTcKd88KU) |
 | [02-blue-green-vs-rolling](02-blue-green-vs-rolling) | Blue-green vs rolling deploys: why requests still fail (not uploaded yet) |
+| [03-aws-bucket-policy](03-aws-bucket-policy) | A bucket policy that's too open (not uploaded yet) |
