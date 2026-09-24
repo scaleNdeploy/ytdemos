@@ -9,3 +9,4 @@ One folder per video. All names and data are fictional. MIT license.
 | [02-blue-green-vs-rolling](02-blue-green-vs-rolling) | Blue-green vs rolling deploys: why requests still fail (not uploaded yet) |
 | [03-aws-bucket-policy](03-aws-bucket-policy) | A bucket policy that's too open (not uploaded yet) |
 | [04-secrets-in-git](04-secrets-in-git) | [Deleted the key? It is still in Git](https://youtu.be/Et33NM8Gf4w) |
+| [09-model-drift](09-model-drift) | Is your model going stale? Detecting drift (not uploaded yet) |
