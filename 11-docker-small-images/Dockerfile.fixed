@@ -1,0 +1,25 @@
+# ---- builder: install deps into a venv ----
+FROM python:3.11-slim AS builder
+
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ---- final: only the venv + app code ----
+FROM python:3.11-slim
+
+RUN useradd --create-home appuser
+
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+WORKDIR /app
+COPY app.py .
+
+USER appuser
+
+EXPOSE 8000
+
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
