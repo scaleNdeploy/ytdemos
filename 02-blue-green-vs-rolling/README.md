@@ -1,6 +1,6 @@
 # Blue-green vs rolling deploys: why requests still fail
 
-Video: not uploaded yet
+Video: https://youtu.be/qkheQMRVmzg
 Short: not uploaded yet
 
 Needs Python 3.10 or newer. No other packages. Everything here runs real
