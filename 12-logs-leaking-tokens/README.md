@@ -1,7 +1,7 @@
 # Your logs are leaking tokens
 
-Video: (link added after upload)
-Short: (link added after upload)
+Video: https://youtu.be/4IZiquSegz4
+Short: https://youtube.com/shorts/2VfA4cZJNTQ
 
 Needs Python 3.10 or newer and pytest (tested with Python 3.10.12, pytest 9.1.1).
 
