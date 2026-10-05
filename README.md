@@ -14,4 +14,5 @@ One folder per video. All names and data are fictional. MIT license.
 | [08-deploy-tests](08-deploy-tests) | Test your deploy script without deploying (not uploaded yet) |
 | [09-model-drift](09-model-drift) | Is your model going stale? Detecting drift (not uploaded yet) |
 | [10-mlflow-registry](10-mlflow-registry) | Which model is in production? Experiment tracking (not uploaded yet) |
-| [11-docker-small-images](11-docker-small-images) | Docker for a Python service: small images (not uploaded yet) |
+| [11-docker-small-images](11-docker-small-images) | [Docker for a Python service: small images](https://youtu.be/WTZats2rd50) |
+| [12-logs-leaking-tokens](12-logs-leaking-tokens) | Your logs are leaking tokens (not uploaded yet) |

@@ -1,6 +1,6 @@
 # Docker for a Python service: small images
 
-Video: (link added after upload)
+Video: https://youtu.be/WTZats2rd50
 
 Needs Docker (Docker Desktop or any Docker Engine 20.10+). No Python
 install required on the host -- everything runs inside the containers.
