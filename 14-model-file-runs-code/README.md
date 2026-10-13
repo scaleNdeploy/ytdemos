@@ -1,7 +1,7 @@
 # Loading a model file can run code
 
-Video: (link added after upload)
-Short: (link added after upload)
+Video: https://youtu.be/7x5xYy1K34w
+Short: https://youtube.com/shorts/VZW1az810SQ
 
 > **Safety note.** This repo demonstrates, defensively, that loading an
 > untrusted pickle-based model file can run code. The demo payload here is

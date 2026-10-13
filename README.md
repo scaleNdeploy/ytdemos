@@ -16,4 +16,4 @@ One folder per video. All names and data are fictional. MIT license.
 | [10-mlflow-registry](10-mlflow-registry) | Which model is in production? Experiment tracking (not uploaded yet) |
 | [11-docker-small-images](11-docker-small-images) | [Docker for a Python service: small images](https://youtu.be/WTZats2rd50) |
 | [12-logs-leaking-tokens](12-logs-leaking-tokens) | [Your logs are leaking tokens](https://youtu.be/4IZiquSegz4) |
-| [14-model-file-runs-code](14-model-file-runs-code) | Loading a model file can run code (not uploaded yet) |
+| [14-model-file-runs-code](14-model-file-runs-code) | [Loading a model file can run code](https://youtu.be/7x5xYy1K34w) |

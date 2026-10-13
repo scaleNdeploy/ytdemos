@@ -1,0 +1,11 @@
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+tfplan
+cloud/
+cloud-safe/
+cloud-review/
+cloud-direct-c/
+.claude/
+*.jsonl
