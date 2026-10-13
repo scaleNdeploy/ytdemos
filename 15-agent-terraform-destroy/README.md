@@ -1,6 +1,7 @@
 # An AI agent ran terraform destroy
 
-Video: [link added after upload]
+Video: https://youtu.be/8Rr6IFJjAfQ
+Short: https://youtube.com/shorts/Ws0yheKIwMQ
 
 > **Safety note.** Everything here uses the `hashicorp/local` provider. The
 > "cloud" is a few text files in a folder next to each demo. Nothing touches
