@@ -1,0 +1,85 @@
+$ docker --version
+Docker version 29.8.0, build 88096ef
+
+$ ./setup.sh
+sha256:e8e4c2b91ab34ff66534f6d40a2899c26c2b453bc5e84048df604ee2331d5967
+bbfe5e8996fd86d82a7417483de003f497580f942c6982bbf5025c8c8c18eb3a
+00d9b4cc076487405d0da25e512f3d5caa13feb76056fd96e1e547cc970fcb2d
+82b1b2842757e993f29dccd3da41b24407f79c85c9b799ff31221e6b92455661
+de980471a45e061e8fa440d5baf7edc94035e2b651486071d2a7b9f925642808
+4f5eb0173fb1e5dd529802811083d725e0f7d0a3aef9d57e271cc73e47de6a6c
+ef8affbb520fdb900cd1e1293496a1f62eb57a8c4cfc6c4252adf7e29131205a
+b3f8296dc7ea4a2850af3fc4015aabece6fd783d37a9a8ffce4735718bcd177c
+a846c7e50f38be5224dc70503de778e321257710dc66185e867e712d6a388260
+
+$ ./versions.sh
+server-1  v1
+server-2  v1
+server-3  v1
+server-4  v1
+server-5  v1
+server-6  v1
+server-7  v1
+server-8  v1
+
+$ ./deploy.sh
+Deploy complete.
+
+$ ./versions.sh
+server-1  v2
+server-2  v2
+server-3  v2
+server-4  v2
+server-5  v2
+server-6  v2
+server-7  v2
+server-8  v1
+
+$ ./send_orders.sh fast
+server-1  {"sent": 1, "lane": "fast"}
+server-2  {"sent": 1, "lane": "fast"}
+server-3  {"sent": 1, "lane": "fast"}
+server-4  {"sent": 1, "lane": "fast"}
+server-5  {"sent": 1, "lane": "fast"}
+server-6  {"sent": 1, "lane": "fast"}
+server-7  {"sent": 1, "lane": "fast"}
+server-8  {"sent": 5000, "lane": "repeat"}
+
+$ ./check.sh v2; echo "exit code: $?"
+server-1  v2
+server-2  v2
+server-3  v2
+server-4  v2
+server-5  v2
+server-6  v2
+server-7  v2
+server-8  v1
+MISMATCH. Do not go live.
+exit code: 1
+
+$ ./deploy.sh orders_v3.py
+Deploy complete.
+
+$ ./send_orders.sh fast_lane
+server-1  {"sent": 1, "lane": "fast"}
+server-2  {"sent": 1, "lane": "fast"}
+server-3  {"sent": 1, "lane": "fast"}
+server-4  {"sent": 1, "lane": "fast"}
+server-5  {"sent": 1, "lane": "fast"}
+server-6  {"sent": 1, "lane": "fast"}
+server-7  {"sent": 1, "lane": "fast"}
+server-8  {"sent": 1, "lane": "normal"}
+
+$ ./stop-all.sh
+server-1
+server-2
+server-3
+server-4
+server-5
+server-6
+server-7
+server-8
+
+$ docker ps
+[other containers on my PC hidden. None is server-1 to server-8.]
+
