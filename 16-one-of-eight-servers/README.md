@@ -1,7 +1,7 @@
 # Your deploy said "complete". Did all 8 servers get the new code?
 
-Video: (link added after upload)
-Shorts: (links added after upload)
+Video: https://youtu.be/DEQUvaPhl80
+Shorts: https://youtube.com/shorts/M4Ri9-SSevs , https://youtube.com/shorts/JXs1HosTgUU , https://youtube.com/shorts/iP6QlW4khFc
 
 > **Safety note.** Everything runs in 8 local Docker containers on your own
 > PC (ports 8081 to 8088). It does not touch any real system. `send_orders.sh`
