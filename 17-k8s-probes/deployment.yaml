@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: orders-api}
+  template:
+    metadata:
+      labels: {app: orders-api}
+    spec:
+      containers:
+      - name: api
+        image: python:3.11-slim
+        command: ["python", "-m", "http.server", "8000"]
+        readinessProbe:
+          httpGet: {path: /, port: 8000}
+          periodSeconds: 3
+      - name: db-proxy
+        image: python:3.11-slim
+        command: ["python", "/code/proxy.py"]
+        volumeMounts:
+        - {name: code, mountPath: /code}
+        readinessProbe:
+          tcpSocket: {port: 5433}
+          periodSeconds: 3
+      volumes:
+      - name: code
+        configMap: {name: proxy-code}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-api
+spec:
+  selector: {app: orders-api}
+  ports:
+  - {port: 80, targetPort: 8000}

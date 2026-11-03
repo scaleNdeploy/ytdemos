@@ -1,0 +1,71 @@
+$ kubectl version --client
+Client Version: v1.34.2
+Kustomize Version: v5.7.1
+
+$ kubectl create configmap proxy-code --from-file=proxy.py
+configmap/proxy-code created
+
+$ kubectl apply -f old-db.yaml
+deployment.apps/old-db created
+service/old-db created
+
+$ kubectl apply -f deployment.yaml
+deployment.apps/orders-api created
+service/orders-api created
+
+$ kubectl get pods -l app=orders-api
+NAME                          READY   STATUS    RESTARTS   AGE
+orders-api-86d7d77795-hfp6m   2/2     Running   0          9s
+orders-api-86d7d77795-zq4xt   2/2     Running   0          9s
+
+$ grep -n old-db proxy.py deployment.yaml
+proxy.py:7:        socket.create_connection(("old-db", 5432), timeout=3)
+
+$ kubectl delete -f old-db.yaml
+deployment.apps "old-db" deleted from default namespace
+service "old-db" deleted from default namespace
+
+$ kubectl get pods -l app=orders-api
+NAME                          READY   STATUS    RESTARTS   AGE
+orders-api-86d7d77795-hfp6m   2/2     Running   0          25s
+orders-api-86d7d77795-zq4xt   2/2     Running   0          25s
+
+$ kubectl scale deployment orders-api --replicas=4
+deployment.apps/orders-api scaled
+
+$ kubectl get pods -l app=orders-api
+NAME                          READY   STATUS    RESTARTS   AGE
+orders-api-86d7d77795-h9htm   1/2     Running   0          40s
+orders-api-86d7d77795-hfp6m   2/2     Running   0          65s
+orders-api-86d7d77795-nsvmb   1/2     Running   0          40s
+orders-api-86d7d77795-zq4xt   2/2     Running   0          65s
+
+$ kubectl describe pods -l app=orders-api | grep -m3 "5433"
+    Readiness:      tcp-socket :5433 delay=0s timeout=1s period=3s #success=1 #failure=3
+  Warning  Unhealthy  1s (x15 over 39s)  kubelet            Readiness probe failed: dial tcp 10.244.0.17:5433: connect: connection refused
+    Readiness:      tcp-socket :5433 delay=0s timeout=1s period=3s #success=1 #failure=3
+
+$ kubectl get endpoints orders-api
+NAME         ENDPOINTS                           AGE
+orders-api   10.244.0.14:8000,10.244.0.15:8000   66s
+
+$ kubectl apply -f deployment-fixed.yaml
+deployment.apps/orders-api configured
+service/orders-api unchanged
+
+$ kubectl get pods -l app=orders-api
+NAME                          READY   STATUS    RESTARTS   AGE
+orders-api-77fb49787b-9tss9   1/1     Running   0          37s
+orders-api-77fb49787b-h546l   1/1     Running   0          37s
+orders-api-77fb49787b-lwtbg   1/1     Running   0          40s
+orders-api-77fb49787b-wrqm7   1/1     Running   0          40s
+
+$ kubectl apply -f deployment-liveness.yaml
+deployment.apps/orders-api configured
+
+$ kubectl get pods -l app=orders-api
+NAME                          READY   STATUS    RESTARTS     AGE
+orders-api-674b6bf9bf-l9kh8   1/2     Running   3 (3s ago)   2m1s
+orders-api-77fb49787b-9tss9   1/1     Running   0            2m38s
+orders-api-77fb49787b-h546l   1/1     Running   0            2m38s
+

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: old-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: old-db}
+  template:
+    metadata:
+      labels: {app: old-db}
+    spec:
+      containers:
+      - name: old-db
+        image: python:3.11-slim
+        command: ["python", "-m", "http.server", "5432"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: old-db
+spec:
+  selector: {app: old-db}
+  ports:
+  - {port: 5432}
