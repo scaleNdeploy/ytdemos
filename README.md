@@ -20,3 +20,4 @@ One folder per video. All names and data are fictional. MIT license.
 | [15-agent-terraform-destroy](15-agent-terraform-destroy) | [An AI agent ran terraform destroy](https://youtu.be/8Rr6IFJjAfQ) |
 | [16-one-of-eight-servers](16-one-of-eight-servers) | [Your deploy said complete: did all 8 servers get the new code?](https://youtu.be/DEQUvaPhl80) |
 | [17-k8s-probes](17-k8s-probes) | [Why your new pods stay at 1/2 Ready](https://youtu.be/leOwCJbLUeM) |
+| [18-backup-restore](18-backup-restore) | [Your backup says complete: is the file empty?](add after upload) |

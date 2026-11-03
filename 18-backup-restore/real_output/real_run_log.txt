@@ -1,0 +1,46 @@
+$ docker --version
+Docker version 29.8.0, build 88096ef
+
+$ docker exec orders-db psql --version
+psql (PostgreSQL) 16.13 (Debian 16.13-1.pgdg13+1)
+
+$ docker exec orders-db psql -U demo orders -c "SELECT count(*) FROM orders"
+ count 
+-------
+   200
+(1 row)
+
+
+$ ./backup.sh
+Backup complete.
+
+$ wc -c backups/orders.sql
+0 backups/orders.sql
+
+$ cat backup.log
+pg_dump: error: aborting because of server version mismatch
+pg_dump: detail: server version: 16.13 (Debian 16.13-1.pgdg13+1); pg_dump version: 15.13 (Debian 15.13-1.pgdg120+1)
+
+$ docker exec orders-db psql -U demo orders -c "DROP TABLE orders"
+DROP TABLE
+
+$ docker exec -i orders-db psql -U demo orders < backups/orders.sql
+
+$ docker exec orders-db psql -U demo orders -c "SELECT count(*) FROM orders"
+ERROR:  relation "orders" does not exist
+LINE 1: SELECT count(*) FROM orders
+                             ^
+
+$ ./backup-checked.sh
+FAILED: the dump tool stopped. See backup.log
+
+$ ./backup-fixed.sh
+Backup complete: 4273 bytes
+
+$ wc -c backups/orders.sql
+4273 backups/orders.sql
+
+$ ./restore-test.sh
+
+RESTORE OK: 200 rows
+
