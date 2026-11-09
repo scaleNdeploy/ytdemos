@@ -1,0 +1,40 @@
+$ docker version --format "server {{.Server.Version}}"
+server 29.8.0
+
+$ docker info | grep -i -E "timeout|stop|Server Version|Operating System|Kernel Version|Context"
+WARNING: No blkio throttle.read_bps_device support
+WARNING: No blkio throttle.write_bps_device support
+WARNING: No blkio throttle.read_iops_device support
+WARNING: No blkio throttle.write_iops_device support
+WARNING: Support for cgroup v1 is deprecated and planned to be removed by no later than May 2029 (https://github.com/moby/moby/issues/51111)
+ Context:    desktop-linux
+  Stopped: 19
+ Server Version: 29.8.0
+ Kernel Version: 5.15.167.4-microsoft-standard-WSL2
+ Operating System: Docker Desktop
+
+$ docker context ls
+NAME              DESCRIPTION                               DOCKER ENDPOINT                             ERROR
+default           Current DOCKER_HOST based configuration   npipe:////./pipe/docker_engine              
+desktop-linux *   Docker Desktop                            npipe:////./pipe/dockerDesktopLinuxEngine   
+
+$ docker run -d --name worker-slow worker:slow
+a13208e6dbb789bd15ea4cb0a7dbc585e936269cdec69de9ef9a542908f5bd64
+
+$ docker inspect -f "StopTimeout={{.Config.StopTimeout}} StopSignal={{.Config.StopSignal}}" worker-slow
+StopTimeout=<nil> StopSignal=
+
+$ time docker stop -t 10 worker-slow
+worker-slow
+real	0m10.8s
+
+$ docker inspect -f "{{.State.ExitCode}}" worker-slow
+137
+
+$ docker run -d --name worker-slow worker:slow
+50c99bf03229a7f231885c9f376831fb819dd5443482eaa2690a3fae959536e0
+
+$ time docker stop worker-slow
+worker-slow
+real	0m3.7s
+

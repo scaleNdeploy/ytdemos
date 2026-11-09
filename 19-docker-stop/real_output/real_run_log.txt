@@ -1,0 +1,85 @@
+$ docker --version
+Docker version 29.8.0, build 88096ef
+
+$ docker run --rm python:3.11-slim python --version
+Python 3.11.18
+
+$ docker run -d --name worker-slow worker:slow
+35883bc67ad51b6a261d441071379621c4614f1a356efea0748fedb0bfecff12
+
+$ docker top worker-slow
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                11995               11970               0                   05:35               ?                   00:00:00            /bin/sh -c python worker.py
+root                12008               11995               2                   05:35               ?                   00:00:00            python worker.py
+
+$ time docker stop -t 10 worker-slow
+worker-slow
+real	0m10.7s
+
+$ docker inspect -f "{{.State.ExitCode}}" worker-slow
+137
+
+$ docker logs --tail 3 worker-slow
+processing order 26
+processing order 27
+processing order 28
+
+$ docker run -d --name worker-fast worker:fast
+309f62413dcc4923517cb69495f863bd173a3781af02159972bf454cc66ce88f
+
+$ docker top worker-fast
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                12362               12337               2                   05:35               ?                   00:00:00            python worker.py
+
+$ time docker stop worker-fast
+worker-fast
+real	0m1.1s
+
+$ docker inspect -f "{{.State.ExitCode}}" worker-fast
+0
+
+$ docker logs --tail 3 worker-fast
+processing order 8
+got SIGTERM, finishing
+order 8 done, bye
+
+$ docker run -d --name worker-nohandler worker:nohandler
+cb89f043f31ee182a57574d55dfcd0a5bca929a0822e300a0e3fb159363184c7
+
+$ time docker stop -t 10 worker-nohandler
+worker-nohandler
+real	0m10.8s
+
+$ docker inspect -f "{{.State.ExitCode}}" worker-nohandler
+137
+
+$ docker logs --tail 3 worker-nohandler
+processing order 25
+processing order 26
+processing order 27
+
+$ docker run -d --name worker-slow worker:slow
+c7083e4d98c720abfb2e86557fbdf8c07490135fb64314f6e712881e05a0539b
+
+$ time docker stop -t 1 worker-slow
+worker-slow
+real	0m1.7s
+
+$ docker inspect -f "{{.State.ExitCode}}" worker-slow
+137
+
+$ docker logs --tail 3 worker-slow
+processing order 7
+processing order 8
+processing order 9
+
+$ docker run -d --init --name worker-init worker:nohandler
+2f6c1e08b826d3b044084d5d6297497298e53f1cf63bbeea5c0d0aa98388b418
+
+$ time docker stop worker-init
+worker-init
+real	0m0.6s
+
+$ docker inspect -f "{{.State.ExitCode}}" worker-init
+143
+
